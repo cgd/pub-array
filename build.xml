@@ -10,8 +10,13 @@
         the main build file for the PubArray project
     </description>
     
-    <import file="build-properties.xml"/>
-    <import file="${common.build.dir}/build-common.xml"/>
+    <!-- force a build clean until we have a smarter build system -->
+    <target name="dist" depends="clean">
+        <subant buildpath="${basedir}/modules/pub-array-installer" target="web-dist"/>
+    </target>
+
+    <target name="clean">
+        <subant buildpath="${basedir}/modules/pub-array-installer" target="clean"/>
+    </target>
     
-    <target name="dist" depends="build-deps,ivy-retrieve"/>
 </project>

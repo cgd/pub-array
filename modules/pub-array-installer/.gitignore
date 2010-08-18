@@ -2,3 +2,6 @@ eclipse-output/
 build/
 dist/
 lib/
+bogus-keystore
+web-dist/
+
