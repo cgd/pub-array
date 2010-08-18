@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link rel="stylesheet" type="text/css" href="css/gxt-all.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pub-array-style.css"/>
+
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>Pub Array - Administration</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <script type="text/javascript" language="javascript" src="adminapplication/adminapplication.nocache.js"></script>
+  </head>
+
+  <!--                                           -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
+  <!--                                           -->
+  <body class="page">
+
+    <!-- OPTIONAL: include this if you want history support -->
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+
+    <h1 class="page">Pub Array - Administration</h1>
+
+    <div class="pageSection">
+        The administration interface allows you to upload your experimental to
+        the PubArray database.
+    </div>
+    
+    <h2 class="page">Step 1: Upload Design Data</h2>
+    <div class="pageSection">
+        <div>
+            The design file describes which factors you observed during your
+            experiment (eg: sex, strain, diet) and what values those factors took
+            on for a particular microarray data set. See the help for detailed
+            information on how this file (as well as the other files) should be
+            structured.
+
+            <!--
+            The file must contain a header
+            row. The name given to the first column is unimportant, but the values
+            in this column must match up with the header names from the microarray
+            data file in the next step. This means that the number of rows in the
+            design file (not counting the header row) will match the number of
+            columns in the data file. The remaining columns names should be the
+            names of the factors that you observed and the values within those
+            columns should be the values observed.
+            -->
+        </div>
+
+        <div id="designFormContainer"></div>
+    </div>
+
+    <h2 class="page">Step 2: Upload Microarray Data</h2>
+    <div class="pageSection">
+        <div>
+            Your microarray data file should contain all of the intensity
+            data from your microarray experiment (this could be normalized or
+            raw data). The first column should contain all of the probe ID's
+            (or probeset ID's) used in the microarray that you performed your
+            experiment on.
+        </div>
+
+        <div id="dataFormContainer"></div>
+    </div>
+
+    <h2 class="page">Step 3: Upload Annotation Data (Optional)</h2>
+    <div class="pageSection">
+        <div>
+            The first column of the annotation data file should contain all of
+            the same probe ID's that are found in the data file that was loaded
+            in Step 2. The remaining annotation columns can contain
+            arbitrary textual or numerical data, such as GO terms or gene IDs.
+        </div>
+
+        <div id="annotationFormContainer"></div>
+        <div>
+            <button id="newAnnotationsGroupButton">Create a New Annotations Group Named</button>
+            <input id="newAnnotationsGroupNameInput" type="text"/>
+            Eg: Affymetrix Annotations, MGI Annotations ...
+        </div>
+    </div>
+
+    <h2 class="page">Step 4: Upload Statistics Data (Optional)</h2>
+    <div class="pageSection">
+        <div>
+            The formatting rules are exactly the same as for the Annotation Data.
+            The first column of the statistics data file should contain all of
+            the same probe ID's that are found in the data file that was loaded
+            in Step 2. The remaining statistics columns can contain
+            arbitrary textual or numerical data such as such as precalculated
+            probe statistics.
+        </div>
+
+        <div id="statisticsFormContainer"></div>
+        <div>
+            <button id="newStatisticsGroupButton">Create a New Statistics Group Named</button>
+            <input id="newStatisticsGroupNameInput" type="text"/>
+            Eg: Model 1 Statistics, B6 Statistics, Stats ...
+        </div>
+    </div>
+
+    <h2 class="page">Step 5: Save Changes</h2>
+    <div class="pageSection">
+        <div>
+            No file uploads or metadata edits will be available until they are
+            saved to the database
+        </div>
+        <div>
+            <button id="saveButton">Save Changes</button>
+            <button id="cancelButton">Cancel Changes</button>
+            <div id="saveOrCancelStatus"></div>
+        </div>
+    </div>
+  </body>
+
+</html>

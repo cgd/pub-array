@@ -1,0 +1,10 @@
+tiss-18-illumina.war
+18 Tissue Illumina Data
+Here is my description \
+of the <b>18 Tissue Experiment</b>
+/Users/kss/pub-array-test-data/Tiss18Illum/Tiss18Illum_design.txt
+/Users/kss/pub-array-test-data/Tiss18Illum/Tiss18Illum_data.txt
+/Users/kss/pub-array-test-data/Tiss18Illum/annotations
+Annotation Data
+/Users/kss/pub-array-test-data/Tiss18Illum/test_stats
+Statistics

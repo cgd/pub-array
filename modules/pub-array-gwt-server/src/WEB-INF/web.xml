@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+
+    <context-param>
+        <param-name>org.jax.pubarray.server.DatabaseServletContextListener.databasePath</param-name>
+        <param-value>/pub-array-db</param-value>
+        <!--<param-value>/home/kss/diet-strain-survey-db</param-value>-->
+        <!--<param-value>/Users/kss/Tiss18Illum-db</param-value>-->
+        <description>the path to use for the HSQLDB database</description>
+    </context-param>
+    
+    <listener>
+        <listener-class>org.jax.pubarray.server.HSQLDBResourceServletContextListener</listener-class>
+    </listener>
+    
+    <!-- jersey servlet for RESTful IO -->
+    <servlet>
+        <servlet-name>jerseyServlet</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- GWT query servlet -->
+    <servlet>
+        <servlet-name>queryServlet</servlet-name>
+        <servlet-class>org.jax.pubarray.server.gwtquery.QueryServiceImpl</servlet-class>
+    </servlet>
+
+    <!-- servlet for generating graph images -->
+    <servlet>
+        <servlet-name>graphingServlet</servlet-name>
+        <servlet-class>org.jax.pubarray.server.gwtquery.GraphingServiceImpl</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>jerseyServlet</servlet-name>
+        <url-pattern>/restful/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>queryServlet</servlet-name>
+        <url-pattern>/queryapplication/queryservice</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>graphingServlet</servlet-name>
+        <url-pattern>/queryapplication/graphingservice</url-pattern>
+    </servlet-mapping>
+
+    <!-- Default page to serve -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ivy-module version="2.0">
+    <info organisation="org.jax" module="pub-array-gwt-client" revision="1.0"/>
+
+    <configurations>
+        <conf
+            name="compile"
+            description="dependencies needed to compile"/>
+        <conf
+            name="test"
+            extends="compile"
+            description="dependencies needed to test"/>
+    </configurations>
+
+    <publications>
+        <artifact name="pub-array-gwt-client" type="jar" ext="jar"/>
+        <artifact name="pub-array-gwt-client" type="zip" ext="zip"/>
+    </publications>
+
+    <dependencies>
+        <dependency
+            org="com.google"
+            name="gwt"
+            rev="latest.integration"
+            conf="*->client"/>
+        <dependency
+            org="org.jax"
+            name="gwt-client-util"
+            rev="latest.integration"/>
+        <dependency
+            org="com.extjs"
+            name="gxt"
+            rev="latest.integration"/>
+        <dependency
+            org="org.apache"
+            name="jakarta-taglibs-standard"
+            rev="latest.integration"/>
+    </dependencies>
+
+</ivy-module>

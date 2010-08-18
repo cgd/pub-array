@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.ant.freeform</type>
+    <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <!-- Do not use Project Properties customizer when editing this file manually. -->
+            <name>PubArray</name>
+            <properties/>
+            <folders>
+                <source-folder>
+                    <label>libraries/gwt-client-util/src/java</label>
+                    <type>java</type>
+                    <location>libraries/gwt-client-util/src/java</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/jax-util/src/java</label>
+                    <type>java</type>
+                    <location>libraries/jax-util/src/java</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/jax-util/src/resources</label>
+                    <type>java</type>
+                    <location>libraries/jax-util/src/resources</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-core/src/java</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-core/src/java</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-core/src/resources</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-core/src/resources</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-restful/src/java</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-restful/src/java</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-restful/src/resources</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-restful/src/resources</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-restful/src/WEB-INF</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-restful/src/WEB-INF</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-gwt-server/src/java</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-gwt-server/src/java</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-gwt-server/src/resources</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-gwt-server/src/resources</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-gwt-server/src/WEB-INF</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-gwt-server/src/WEB-INF</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-gwt-client/src/java</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-gwt-client/src/java</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-gwt-client/src/www</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-gwt-client/src/www</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-installer/src/java</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-installer/src/java</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-installer/src/web</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-installer/src/web</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/pub-array-installer/src/resources</label>
+                    <type>java</type>
+                    <location>libraries/pub-array-installer/src/resources</location>
+                </source-folder>
+                <source-folder>
+                    <label>libraries/blitzkrieg/src/java</label>
+                    <type>java</type>
+                    <location>libraries/blitzkrieg/src/java</location>
+                </source-folder>
+            </folders>
+            <ide-actions>
+                <action name="build">
+                    <target>dist</target>
+                </action>
+                <action name="clean">
+                    <target>clean</target>
+                </action>
+                <action name="rebuild">
+                    <target>clean</target>
+                    <target>dist</target>
+                </action>
+            </ide-actions>
+            <view>
+                <items>
+                    <source-folder style="packages">
+                        <label>libraries/gwt-client-util/src/java</label>
+                        <location>libraries/gwt-client-util/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/jax-util/src/java</label>
+                        <location>libraries/jax-util/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/jax-util/src/resources</label>
+                        <location>libraries/jax-util/src/resources</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-core/src/java</label>
+                        <location>libraries/pub-array-core/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-core/src/resources</label>
+                        <location>libraries/pub-array-core/src/resources</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-restful/src/java</label>
+                        <location>libraries/pub-array-restful/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-restful/src/resources</label>
+                        <location>libraries/pub-array-restful/src/resources</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-restful/src/WEB-INF</label>
+                        <location>libraries/pub-array-restful/src/WEB-INF</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-gwt-server/src/java</label>
+                        <location>libraries/pub-array-gwt-server/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-gwt-server/src/resources</label>
+                        <location>libraries/pub-array-gwt-server/src/resources</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-gwt-server/src/WEB-INF</label>
+                        <location>libraries/pub-array-gwt-server/src/WEB-INF</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-gwt-client/src/java</label>
+                        <location>libraries/pub-array-gwt-client/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-gwt-client/src/www</label>
+                        <location>libraries/pub-array-gwt-client/src/www</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-installer/src/java</label>
+                        <location>libraries/pub-array-installer/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-installer/src/web</label>
+                        <location>libraries/pub-array-installer/src/web</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/pub-array-installer/src/resources</label>
+                        <location>libraries/pub-array-installer/src/resources</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>libraries/blitzkrieg/src/java</label>
+                        <location>libraries/blitzkrieg/src/java</location>
+                    </source-folder>
+                    <source-file>
+                        <location>build.xml</location>
+                    </source-file>
+                </items>
+                <context-menu>
+                    <ide-action name="build"/>
+                    <ide-action name="rebuild"/>
+                    <ide-action name="clean"/>
+                </context-menu>
+            </view>
+            <subprojects/>
+        </general-data>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+            <compilation-unit>
+                <package-root>libraries/gwt-client-util/src/java</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/jax-util/src/java</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/jax-util/src/resources</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-core/src/java</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-core/src/resources</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-restful/src/java</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-restful/src/resources</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-restful/src/WEB-INF</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-gwt-server/src/java</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-gwt-server/src/resources</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-gwt-server/src/WEB-INF</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-gwt-client/src/java</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-gwt-client/src/www</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-installer/src/java</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-installer/src/web</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/pub-array-installer/src/resources</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>libraries/blitzkrieg/src/java</package-root>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+        </java-data>
+    </configuration>
+</project>

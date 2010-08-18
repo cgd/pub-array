@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project
+    xmlns:ivy="antlib:org.apache.ivy.ant"
+    name="PubArray GWT Client"
+    default="dist"
+    basedir=".">
+    <!-- Configure path to GWT SDK -->
+    <property name="gwt.sdk" location="/Users/kss/projects/third-party/gwt-mac-1.6.4" />
+
+    <import file="build-properties.xml"/>
+    <import file="${common.build.dir}/build-common.xml"/>
+    
+    <path id="classpath">
+        <pathelement location="${src}/java"/>
+        <pathelement location="${build}/java"/>
+        <fileset dir="${lib}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- FIXME there is a lot of hack stuff in this target -->
+    <target name="compile-nodeps" depends="ivy-retrieve" description="compile the source">
+        <!-- Compile the java code from ${src} into ${build}/classes -->
+        <mkdir dir="${build}/classes"/>
+        <mkdir dir="${build}/java"/>
+
+        <!-- HACK! -->
+        <unjar dest="${build}/java">
+            <fileset dir="${lib}">
+                <include name="gwt-client-util-src-*.jar"/>
+                <include name="gxt-*.jar"/>
+                <exclude name="gxt-resources-*.jar"/>
+            </fileset>
+        </unjar>
+        
+        <javac destdir="${build}/classes" target="1.5" source="1.5" deprecation="true" classpathref="proj.classpath" debug="true">
+            <src path="${src}/java"/>
+            <src path="${build}/java"/>
+            <!--
+            <compilerarg value="-Xlint"/>
+            <compilerarg value="-Xlint:-serial"/>
+            -->
+        </javac>
+
+        <copy todir="${build}/www">
+            <fileset dir="${src}/www"/>
+        </copy>
+        <unjar dest="${build}/www">
+            <fileset dir="${lib}">
+                <!-- HACK! -->
+                <include name="gxt-resources-*.jar"/>
+            </fileset>
+        </unjar>
+
+        <!-- GWT compile the Query application -->
+        <java fork="true"
+              classname="com.google.gwt.dev.Compiler"
+              classpathref="classpath"
+              failonerror="true">
+            <jvmarg value="-Xmx256M"/>
+            <jvmarg value="-XstartOnFirstThread"/>
+            <arg value="-war"/>
+            <arg value="${build}/www"/>
+
+            <!--
+            This is set to 2 because I have 2 cores on my mac. You can modify
+            this to whatever number makes sense for your architecture
+            -->
+            <arg value="-localWorkers"/>
+            <arg value="2"/>
+
+            <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+            <arg value="org.jax.pubarray.gwtqueryapp.QueryApplication"/>
+        </java>
+    </target>
+
+    <target name="jar" depends="common.jar" description="JAR the distribution.">
+        <mkdir dir="${dist}"/>
+        
+        <!-- Put everything in ${build} into the ${proj}.war file -->
+        <ivy:info file="ivy.xml"/>
+        <zip destfile="${dist}/${ivy.module}-${ivy.revision}.zip">
+            <fileset dir="${build}/www"/>
+        </zip>
+    </target>
+
+    <target name="clean-nodeps" depends="common.clean-nodeps" description="clean up local build (ignoring dependencies)">
+        <!-- Delete the built directory trees -->
+        <delete dir="tomcat"/>
+    </target>
+
+</project>

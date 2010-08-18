@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ivy-module version="2.0">
+    <info organisation="org.jax" module="pub-array-gwt-server" revision="1.0"/>
+    
+    <configurations>
+        <conf
+            name="compile"
+            description="dependencies needed to compile"/>
+        <conf
+            name="test"
+            extends="compile"
+            description="dependencies needed to test"/>
+    </configurations>
+
+    <publications>
+        <artifact name="pub-array-gwt-server" type="war" ext="war"/>
+    </publications>
+    
+    <dependencies>
+        <dependency
+            org="com.google"
+            name="gwt"
+            rev="latest.integration"
+            conf="*->server"/>
+        <dependency
+            org="org.jax"
+            name="java-util"
+            rev="latest.integration"/>
+        <dependency
+            org="org.jax"
+            name="pub-array-gwt-client"
+            rev="latest.integration"
+            transitive="false"/>
+        <dependency
+            org="org.jax"
+            name="pub-array-core"
+            rev="latest.integration"/>
+        <dependency
+            org="org.jfree"
+            name="jfreechart"
+            rev="latest.integration"/>
+        
+        <!-- java web/enterprise stuff -->
+        <dependency
+            org="net.java.dev.jersey"
+            name="jersey"
+            rev="latest.integration"/>
+        <dependency
+            org="javax"
+            name="servlet"
+            rev="latest.integration"/>
+        <dependency
+            org="javax"
+            name="annotation"
+            rev="latest.integration"/>
+        
+        <!-- glassfish embedded -->
+        <!--
+        <dependency
+            org="net.java.dev.glassfish"
+            name="glassfish-embedded-web"
+            rev="latest.integration"/>
+        -->
+    </dependencies>
+    
+</ivy-module>

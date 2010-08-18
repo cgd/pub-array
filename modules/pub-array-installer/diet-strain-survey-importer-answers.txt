@@ -1,0 +1,17 @@
+diet-strain-survey.war
+Diet Strain Survey Database
+        This web application provides access to microarray gene expression\
+        results for the Strain Survey Microarray Experiment detailed in\
+        Shockley et al "Using Hepatic Gene Expression and Phenotypes to Explore\
+        Atherogenic Diet in a Mouse Strain Survey", which has been submitted for\
+        publication. For more information on how to use this application and\
+        interpret the results please see the\
+        <a href="StrainSurveyHelpFile.pdf">help documentation</a> [PDF].
+/Users/kss/datasets/modified-shockley/keithData/Design_Data.dat
+/Users/kss/datasets/modified-shockley/keithData/Microarray_Data.dat
+/Users/kss/datasets/modified-shockley/keithData/affy-annotation
+Annotation Data
+/Users/kss/datasets/modified-shockley/keithData/pheno-correlation
+Statistics
+/Users/kss/datasets/modified-shockley/keithData/reformatted
+Statistics

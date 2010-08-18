@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- for internal test deployment -->
+<jnlp
+    spec="1.5+"
+    codebase="http://zapp.jax.org/pub-array/1.0.0-build9/app"
+    href="pub-array.jnlp">
+
+<!-- for public deployment -->
+<!--<jnlp
+    spec="1.5+"
+    codebase="http://cgd.jax.org/churchill-apps/pub-array/1.0.0/app"
+    href="pub-array.jnlp">-->
+    
+    <information>
+        <!-- for internal test deployment -->
+        <title>PubArray WebApp Builder 1.0.0 Build9</title>
+
+        <!-- for public deployment -->
+        <!--<title>PubArray WebApp Builder 1.0.0</title>-->
+
+        <vendor>The Jackson Laboratory</vendor>
+        <homepage href="http://churchill.jax.org"/>
+        <description kind="one-line">A tool for publishing microarray data</description>
+        <offline-allowed/>
+        <shortcut online="false">
+            <desktop/>
+            <menu submenu="TJL"/>
+        </shortcut>
+    </information>
+    
+    <security>
+        <all-permissions/>
+    </security>
+    
+    <resources>
+        <j2se version="1.5+" max-heap-size="1024M"/>
+
+        <jar href="dist/pub-array-installer-1.0.jar"/>
+
+        <jar href="dist/lib/activation-1.1-1.0.3.jar"/>
+        <jar href="dist/lib/annotations-api-1.0.jar"/>
+        <jar href="dist/lib/asm-3.1-1.0.3.jar"/>
+        <jar href="dist/lib/gwt-client-util-src-1.0.jar"/>
+        <jar href="dist/lib/gwt-servlet-2.0.1.jar"/>
+        <jar href="dist/lib/gwt-user-2.0.1.jar"/>
+        <jar href="dist/lib/gxt-2.1.1.jar"/>
+        <jar href="dist/lib/gxt-resources-2.1.1.jar"/>
+        <jar href="dist/lib/hsqldb-1.8.0.10.jar"/>
+        <jar href="dist/lib/jax-util-1.0.jar"/>
+        <jar href="dist/lib/pub-array-core-1.0.jar"/>
+        <jar href="dist/lib/pub-array-gwt-client-1.0.jar"/>
+        <jar href="dist/lib/swing-layout-1.0.3.jar"/>
+    </resources>
+    
+    <application-desc main-class="org.jax.pubarray.installer.PubArrayInstallerMain"/>
+    
+</jnlp>

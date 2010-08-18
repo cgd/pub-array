@@ -1,0 +1,57 @@
+
+/* CSS Style Rules for PubArray
+ *
+ * The reason that I have to use the "page" class for everything is to avoid
+ * conflicts with the Ext-GWT style rules. Pretty lame that I have to do that...
+ */
+
+body.page {
+    font-family: sans-serif;
+}
+
+h1.page {
+    margin-top: 25px;
+    margin-bottom: 40px;
+
+    text-align: center;
+    font-size: 2em;
+}
+
+h2.page {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: 1.3em;
+    width: 90%;
+
+    border-bottom: thin dotted;
+}
+
+h3.page {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: 1.1em;
+    /*width: 90%;*/
+
+    /*border-bottom: thin dotted;*/
+}
+
+div.pageSection {
+    margin-left: auto;
+    margin-right: auto;
+    
+    width: 90%;
+}
+
+tableFileInput {
+    display:inline-block;
+}
+
+div.oddTableGroup {
+    background-color: #E0E0E0;
+}

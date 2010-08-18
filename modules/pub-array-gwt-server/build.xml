@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<project
+    xmlns:ivy="antlib:org.apache.ivy.ant"
+    default="dist"
+    basedir=".">
+    
+    <import file="build-properties.xml"/>
+    <import file="${common.build.dir}/build-common.xml"/>
+    
+    <target name="jar" depends="war" description="do a WAR instead of JAR"/>
+
+    <target name="war" description="JAR up the web app distribution.">
+        
+        <!-- unzip the static web files -->
+        <unzip src="${lib}/pub-array-gwt-client-1.0.zip" dest="${build}/www"/>
+        
+        <!-- Create the lib directory -->
+        <mkdir dir="${dist}"/>
+        
+        <!-- Put everything in ${build}/classes into the war file -->
+        <ivy:info file="ivy.xml"/>
+        <war destfile="${dist}/${ivy.module}-${ivy.revision}.war" webxml="${src}/WEB-INF/web.xml">
+            <fileset dir="${build}/www"/>
+            <classes dir="${build}/classes"/>
+            <classes dir="${src}/resources"/>
+            <webinf dir="${src}/WEB-INF"/>
+            <lib dir="${lib}">
+                <include name="**/*.jar"/>
+                
+                <!-- TODO this should really be handled in ivy config files -->
+                <exclude name="**/gwt-dev-*.jar"/>
+            </lib>
+        </war>
+    	
+    	<!-- make a jar file for the command line importer -->
+    	<jar destfile="${dist}/${ivy.module}-${ivy.revision}.jar">
+            <fileset dir="${build}/classes"/>
+            <fileset dir="${src}/resources"/>
+            <metainf dir="${src}/META-INF"/>
+        </jar>
+        
+    </target>
+    
+</project>

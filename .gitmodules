@@ -1,0 +1,9 @@
+[submodule "build-common"]
+	path = build-common
+	url = ../build-common
+[submodule "modules/gwt-client-util"]
+	path = modules/gwt-client-util
+	url = ../gwt-client-util
+[submodule "modules/java-util"]
+	path = modules/java-util
+	url = ../java-util
