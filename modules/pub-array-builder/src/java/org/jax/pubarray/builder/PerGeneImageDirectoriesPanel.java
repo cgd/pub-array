@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009 The Jackson Laboratory
+ * Copyright (c) 2010 The Jackson Laboratory
  * 
  * This software was developed by Gary Churchill's Lab at The Jackson
  * Laboratory (see http://research.jax.org/faculty/churchill).
@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.jax.pubarray.installer;
+package org.jax.pubarray.builder;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -36,39 +36,40 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import org.jax.pubarray.db.PerGeneImageDirectoryDescription;
 import org.jax.util.gui.SwingUtilities;
 import org.jax.util.gui.ValidatablePanel;
 import org.jax.util.gui.WizardController;
 import org.jax.util.gui.WizardDialog;
 import org.jax.util.gui.WizardDialog.WizardDialogType;
-import org.jax.util.io.FlatFileFormat;
 
 /**
- * Panel that allows users to add/remove/edit annotation info
+ * Allows the user to load dirs which contain per-probe images for your
+ * pub-array application
  * @author <A HREF="mailto:keith.sheppard@jax.org">Keith Sheppard</A>
  */
-public class SelectAnnotationsPanel extends ValidatablePanel
+public class PerGeneImageDirectoriesPanel extends ValidatablePanel
 {
     /**
-     * every {@link java.io.Serializable} is supposed to have one of these
+     * Every {@link java.io.Serializable} is supposed to have one of these
      */
-    private static final long serialVersionUID = 7122995572999350709L;
-    
+    private static final long serialVersionUID = 4236728119695944781L;
+
     /**
      * our logger
      */
     private static final Logger LOG = Logger.getLogger(
-            SelectAnnotationsPanel.class.getName());
+            PerGeneImageDirectoriesPanel.class.getName());
     
     private final SharedDirectoryContainer startingDirectory;
     
-    private DefaultTableModel annotationsMetaTableModel;
+    private DefaultTableModel imageDirDescriptionTableModel;
 
     /**
      * Constructor
      * @param startingDirectory the starting directory to use for browsing files
      */
-    public SelectAnnotationsPanel(SharedDirectoryContainer startingDirectory)
+    public PerGeneImageDirectoriesPanel(SharedDirectoryContainer startingDirectory)
     {
         this.startingDirectory = startingDirectory;
         
@@ -82,18 +83,18 @@ public class SelectAnnotationsPanel extends ValidatablePanel
     private void postGuiInit()
     {
         // make the buttons look pretty
-        this.addTableButton.setIcon(getIcon("/images/action/add-16x16.png"));
+        this.addButton.setIcon(getIcon("/images/action/add-16x16.png"));
         this.editSelectedButton.setIcon(getIcon("/images/action/edit-16x16.png"));
         this.removeSelectedButton.setIcon(getIcon("/images/action/remove-16x16.png"));
         
-        this.addTableButton.addActionListener(new ActionListener()
+        this.addButton.addActionListener(new ActionListener()
         {
             /**
              * {@inheritDoc}
              */
             public void actionPerformed(ActionEvent e)
             {
-                SelectAnnotationsPanel.this.addTable();
+                PerGeneImageDirectoriesPanel.this.addDir();
             }
         });
         
@@ -104,7 +105,7 @@ public class SelectAnnotationsPanel extends ValidatablePanel
              */
             public void actionPerformed(ActionEvent e)
             {
-                SelectAnnotationsPanel.this.editSelectedTable();
+                PerGeneImageDirectoriesPanel.this.editSelected();
             }
         });
         
@@ -115,12 +116,12 @@ public class SelectAnnotationsPanel extends ValidatablePanel
              */
             public void actionPerformed(ActionEvent e)
             {
-                SelectAnnotationsPanel.this.removeSelectedTables();
+                PerGeneImageDirectoriesPanel.this.removeSelected();
             }
         });
         
-        this.annotationsMetaTableModel = new DefaultTableModel(
-                new String[] {"File Name", "Table Name", "Format"},
+        this.imageDirDescriptionTableModel = new DefaultTableModel(
+                new String[] {"Directory", "Name"},
                 0)
         {
             /**
@@ -138,11 +139,11 @@ public class SelectAnnotationsPanel extends ValidatablePanel
                 return false;
             }
         };
-        this.annotationsMetaTable.setModel(this.annotationsMetaTableModel);
-        this.annotationsMetaTable.setSelectionMode(
+        this.imageDirDescriptionTable.setModel(this.imageDirDescriptionTableModel);
+        this.imageDirDescriptionTable.setSelectionMode(
                 ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         
-        this.annotationsMetaTable.getSelectionModel().addListSelectionListener(
+        this.imageDirDescriptionTable.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener()
                 {
                     /**
@@ -152,25 +153,25 @@ public class SelectAnnotationsPanel extends ValidatablePanel
                     {
                         if(!e.getValueIsAdjusting())
                         {
-                            SelectAnnotationsPanel.this.annotationsMetaTableSelectionChanged();
+                            PerGeneImageDirectoriesPanel.this.imageDirDescriptionTableSelectionChanged();
                         }
                     }
                 });
         
-        this.annotationsMetaTableSelectionChanged();
+        this.imageDirDescriptionTableSelectionChanged();
     }
     
-    private void annotationsMetaTableSelectionChanged()
+    private void imageDirDescriptionTableSelectionChanged()
     {
-        int selectionCount = this.annotationsMetaTable.getSelectedRowCount();
+        int selectionCount = this.imageDirDescriptionTable.getSelectedRowCount();
         
         this.editSelectedButton.setEnabled(selectionCount == 1);
         this.removeSelectedButton.setEnabled(selectionCount >= 1);
     }
 
-    private void removeSelectedTables()
+    private void removeSelected()
     {
-        int[] selectedRows = this.annotationsMetaTable.getSelectedRows();
+        int[] selectedRows = this.imageDirDescriptionTable.getSelectedRows();
         
         // this function depends on the order of the rows. this sort may not
         // be needed but the javadoc doesn't claim any ordering property so lets
@@ -178,42 +179,42 @@ public class SelectAnnotationsPanel extends ValidatablePanel
         Arrays.sort(selectedRows);
         for(int i = selectedRows.length - 1; i >= 0; i--)
         {
-            this.annotationsMetaTableModel.removeRow(selectedRows[i]);
+            this.imageDirDescriptionTableModel.removeRow(selectedRows[i]);
         }
     }
 
-    private void editSelectedTable()
+    private void editSelected()
     {
-        if(this.annotationsMetaTable.getSelectedRowCount() == 1)
+        if(this.imageDirDescriptionTable.getSelectedRowCount() == 1)
         {
-            FlatFileDescriptionCell selectedCell =
-                (FlatFileDescriptionCell)this.annotationsMetaTable.getValueAt(
-                        this.annotationsMetaTable.getSelectedRow(),
+            PerGeneImageDirectoryCell selectedCell =
+                (PerGeneImageDirectoryCell)this.imageDirDescriptionTable.getValueAt(
+                        this.imageDirDescriptionTable.getSelectedRow(),
                         0);
-            this.showAddEditAnnotationDialog(
-                    "Edit Annotation Table",
-                    new AddEditAnnotationController(
-                            selectedCell.getFlatFileDescription()));
+            this.showAddEditPerProbeDirDialog(
+                    "Edit Per-Probe Image Directory",
+                    new AddEditPerProbeImageDirController(
+                            selectedCell.getDescription()));
         }
         else
         {
             throw new IllegalStateException(
-                    "trying to edit an annotation table with " +
-                    this.annotationsMetaTable.getSelectedRowCount() +
+                    "trying to edit a per-probe image dir with " +
+                    this.imageDirDescriptionTable.getSelectedRowCount() +
                     " rows selected");
         }
     }
 
-    private void addTable()
+    private void addDir()
     {
-        this.showAddEditAnnotationDialog(
-                "Add Annotation Table",
-                new AddEditAnnotationController());
+        this.showAddEditPerProbeDirDialog(
+                "Add Per-Probe Image Directory",
+                new AddEditPerProbeImageDirController());
     }
     
-    private void showAddEditAnnotationDialog(
+    private void showAddEditPerProbeDirDialog(
             String title,
-            AddEditAnnotationController controller)
+            AddEditPerProbeImageDirController controller)
     {
         final WizardDialog wizardDialog;
         Window parentWindow = SwingUtilities.getContainingWindow(this);
@@ -221,7 +222,7 @@ public class SelectAnnotationsPanel extends ValidatablePanel
         {
             wizardDialog = new WizardDialog(
                     controller,
-                    controller.getFlatFilePanel(),
+                    controller.getPanel(),
                     (JDialog)parentWindow,
                     title,
                     true,
@@ -231,7 +232,7 @@ public class SelectAnnotationsPanel extends ValidatablePanel
         {
             wizardDialog = new WizardDialog(
                     controller,
-                    controller.getFlatFilePanel(),
+                    controller.getPanel(),
                     (JFrame)parentWindow,
                     title,
                     true,
@@ -241,7 +242,7 @@ public class SelectAnnotationsPanel extends ValidatablePanel
         {
             throw new IllegalStateException(
                     "this panel must be attached to a JPanel or JDialog in " +
-                    "order to show the add/edit annotation table dialog");
+                    "order to show the add/edit per-probe image directory dialog");
         }
         
         wizardDialog.setVisible(true);
@@ -249,45 +250,43 @@ public class SelectAnnotationsPanel extends ValidatablePanel
 
     private static ImageIcon getIcon(String classpath)
     {
-        return new ImageIcon(SelectAnnotationsPanel.class.getResource(classpath));
+        return new ImageIcon(PerGeneImageDirectoriesPanel.class.getResource(classpath));
     }
 
-    private class AddEditAnnotationController implements WizardController
+    private class AddEditPerProbeImageDirController implements WizardController
     {
-        private final SelectAndPreviewFlatFilePanel flatFilePanel;
+        private final PerGeneImageDirectoryPanel panel;
         private final boolean isAddPanel;
         
         /**
-         * Constructor for adding a new annotation flat file
+         * Constructor for adding a new dir
          */
-        public AddEditAnnotationController()
+        public AddEditPerProbeImageDirController()
         {
-            this.flatFilePanel = new SelectAndPreviewFlatFilePanel(
-                    SelectAnnotationsPanel.this.startingDirectory,
-                    false);
+            this.panel = new PerGeneImageDirectoryPanel(
+                    PerGeneImageDirectoriesPanel.this.startingDirectory);
             this.isAddPanel = true;
         }
         
         /**
-         * Constructor for editing an existing flat file description
+         * Constructor for editing an existing description
          * @param descriptionToEdit it's all in the name isn't it :-)
          */
-        public AddEditAnnotationController(FlatFileDescription descriptionToEdit)
+        public AddEditPerProbeImageDirController(PerGeneImageDirectoryDescription descriptionToEdit)
         {
-            this.flatFilePanel = new SelectAndPreviewFlatFilePanel(
+            this.panel = new PerGeneImageDirectoryPanel(
                     descriptionToEdit,
-                    SelectAnnotationsPanel.this.startingDirectory,
-                    false);
+                    PerGeneImageDirectoriesPanel.this.startingDirectory);
             this.isAddPanel = false;
         }
         
         /**
-         * Getter for the flat file panel
-         * @return the flat file panel
+         * Getter for the panel
+         * @return the panel
          */
-        public SelectAndPreviewFlatFilePanel getFlatFilePanel()
+        public PerGeneImageDirectoryPanel getPanel()
         {
-            return this.flatFilePanel;
+            return this.panel;
         }
         
         /**
@@ -303,20 +302,20 @@ public class SelectAnnotationsPanel extends ValidatablePanel
          */
         public boolean finish() throws IllegalStateException
         {
-            if(this.flatFilePanel.validateData())
+            if(this.panel.validateData())
             {
-                FlatFileDescription description =
-                    this.flatFilePanel.getFlatFileDescription();
+                PerGeneImageDirectoryDescription description =
+                    this.panel.getPerGeneImageDirectoryDescription();
                 
                 // if this is an add then add it. if it's an edit then update
                 // the current selection
                 if(this.isAddPanel)
                 {
-                    SelectAnnotationsPanel.this.addFlatFileDescription(description);
+                    PerGeneImageDirectoriesPanel.this.addDescription(description);
                 }
                 else
                 {
-                    SelectAnnotationsPanel.this.updateSelectedFlatFileDescription(description);
+                    PerGeneImageDirectoriesPanel.this.updateSelectedDescription(description);
                 }
                 
                 return true;
@@ -379,35 +378,34 @@ public class SelectAnnotationsPanel extends ValidatablePanel
     }
     
     /**
-     * Create a table row for the given flat file description
+     * Create a table row for the given description
      * @param description
      *          the description to create a row for
      * @return
      *          the row
      */
-    private FlatFileDescriptionCell[] descriptionToTableRow(FlatFileDescription description)
+    private PerGeneImageDirectoryCell[] descriptionToTableRow(PerGeneImageDirectoryDescription description)
     {
-        return new FlatFileDescriptionCell[] {
-                new FlatFileDescriptionCell(description, 0),
-                new FlatFileDescriptionCell(description, 1),
-                new FlatFileDescriptionCell(description, 2)};
+        return new PerGeneImageDirectoryCell[] {
+                new PerGeneImageDirectoryCell(description, 0),
+                new PerGeneImageDirectoryCell(description, 1)};
     }
     
-    private void addFlatFileDescription(FlatFileDescription description)
+    private void addDescription(PerGeneImageDirectoryDescription description)
     {
-        this.annotationsMetaTableModel.addRow(this.descriptionToTableRow(description));
+        this.imageDirDescriptionTableModel.addRow(this.descriptionToTableRow(description));
     }
 
-    private void updateSelectedFlatFileDescription(FlatFileDescription description)
+    private void updateSelectedDescription(PerGeneImageDirectoryDescription description)
     {
-        if(this.annotationsMetaTable.getSelectedRowCount() == 1)
+        if(this.imageDirDescriptionTable.getSelectedRowCount() == 1)
         {
-            int selectedRowIndex = this.annotationsMetaTable.getSelectedRow();
+            int selectedRowIndex = this.imageDirDescriptionTable.getSelectedRow();
             
-            FlatFileDescriptionCell[] updatedRow = this.descriptionToTableRow(description);
+            PerGeneImageDirectoryCell[] updatedRow = this.descriptionToTableRow(description);
             for(int colIndex = 0; colIndex < updatedRow.length; colIndex++)
             {
-                this.annotationsMetaTableModel.setValueAt(
+                this.imageDirDescriptionTableModel.setValueAt(
                         updatedRow[colIndex],
                         selectedRowIndex,
                         colIndex);
@@ -416,45 +414,45 @@ public class SelectAnnotationsPanel extends ValidatablePanel
         else
         {
             LOG.severe(
-                    "Cannot update flat file description because the selected " +
-                    "row count is: " + this.annotationsMetaTable.getSelectedRowCount());
+                    "Cannot update because the selected " +
+                    "row count is: " + this.imageDirDescriptionTable.getSelectedRowCount());
         }
     }
 
-    private static final class FlatFileDescriptionCell
+    private static final class PerGeneImageDirectoryCell
     {
-        private final FlatFileDescription flatFileDescription;
+        private final PerGeneImageDirectoryDescription description;
         private final int columnIndex;
         
         /**
          * Constructor
-         * @param flatFileDescription
+         * @param description
          *          the description
          * @param columnIndex
          *          the column index in the table
          */
-        public FlatFileDescriptionCell(
-                FlatFileDescription flatFileDescription,
+        public PerGeneImageDirectoryCell(
+                PerGeneImageDirectoryDescription description,
                 int columnIndex)
         {
-            if(columnIndex < 0 || columnIndex > 2)
+            if(columnIndex < 0 || columnIndex > 1)
             {
                 throw new IndexOutOfBoundsException(
-                        "Column index should be in the range [0, 2], not: " +
+                        "Column index should be in the range [0, 1], not: " +
                         columnIndex);
             }
             
-            this.flatFileDescription = flatFileDescription;
+            this.description = description;
             this.columnIndex = columnIndex;
         }
         
         /**
-         * Getter for the flat file description
+         * Getter for the description
          * @return the description that this class encapsulates
          */
-        public FlatFileDescription getFlatFileDescription()
+        public PerGeneImageDirectoryDescription getDescription()
         {
-            return this.flatFileDescription;
+            return this.description;
         }
         
         /**
@@ -464,45 +462,32 @@ public class SelectAnnotationsPanel extends ValidatablePanel
         public String toString()
         {
             // convert to a string based on the following column headers:
-            // "File Name", "Table Name", "Format"
+            // "Directory", "Name", "Description"
             switch(this.columnIndex)
             {
                 case 0:
                 {
-                    File file = this.flatFileDescription.getFlatFile();
-                    if(file == null)
+                    File dir = this.description.getDirectory();
+                    if(dir == null)
                     {
                         return "";
                     }
                     else
                     {
-                        return file.getName();
+                        return dir.getName();
                     }
                 }
                 
                 case 1:
                 {
-                    String tableName = this.flatFileDescription.getTableName();
-                    if(tableName == null)
+                    String name = this.description.getName();
+                    if(name == null)
                     {
                         return "";
                     }
                     else
                     {
-                        return tableName;
-                    }
-                }
-                
-                case 2:
-                {
-                    FlatFileFormat format = this.flatFileDescription.getFormat();
-                    if(format == null)
-                    {
-                        return "";
-                    }
-                    else
-                    {
-                        return format.toString();
+                        return name;
                     }
                 }
                 
@@ -527,20 +512,20 @@ public class SelectAnnotationsPanel extends ValidatablePanel
     }
     
     /**
-     * Get a list of all the flat file descriptions for annotation data
+     * Get a list of all the descriptions
      * @return
      *          the list
      */
-    public List<FlatFileDescription> getFlatFileDescriptions()
+    public List<PerGeneImageDirectoryDescription> getDescriptions()
     {
-        int descCount = this.annotationsMetaTableModel.getRowCount();
-        List<FlatFileDescription> descriptions =
-            new ArrayList<FlatFileDescription>(descCount);
+        int descCount = this.imageDirDescriptionTableModel.getRowCount();
+        List<PerGeneImageDirectoryDescription> descriptions =
+            new ArrayList<PerGeneImageDirectoryDescription>(descCount);
         for(int i = 0; i < descCount; i++)
         {
-            FlatFileDescriptionCell selectedCell =
-                (FlatFileDescriptionCell)this.annotationsMetaTable.getValueAt(i, 0);
-            descriptions.add(selectedCell.getFlatFileDescription());
+            PerGeneImageDirectoryCell selectedCell =
+                (PerGeneImageDirectoryCell)this.imageDirDescriptionTable.getValueAt(i, 0);
+            descriptions.add(selectedCell.getDescription());
         }
         return descriptions;
     }
@@ -555,19 +540,19 @@ public class SelectAnnotationsPanel extends ValidatablePanel
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        addTableButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
         editSelectedButton = new javax.swing.JButton();
         removeSelectedButton = new javax.swing.JButton();
         javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane();
-        annotationsMetaTable = new javax.swing.JTable();
+        imageDirDescriptionTable = new javax.swing.JTable();
 
-        addTableButton.setText("Add Table...");
+        addButton.setText("Add Per-Gene Image Directory...");
 
         editSelectedButton.setText("Edit Selected...");
 
         removeSelectedButton.setText("Remove Selected");
 
-        scrollPane.setViewportView(annotationsMetaTable);
+        scrollPane.setViewportView(imageDirDescriptionTable);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -576,9 +561,9 @@ public class SelectAnnotationsPanel extends ValidatablePanel
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(scrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+                    .add(scrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                     .add(layout.createSequentialGroup()
-                        .add(addTableButton)
+                        .add(addButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(editSelectedButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
@@ -590,7 +575,7 @@ public class SelectAnnotationsPanel extends ValidatablePanel
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(addTableButton)
+                    .add(addButton)
                     .add(editSelectedButton)
                     .add(removeSelectedButton))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -599,11 +584,10 @@ public class SelectAnnotationsPanel extends ValidatablePanel
         );
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addTableButton;
-    private javax.swing.JTable annotationsMetaTable;
+    private javax.swing.JButton addButton;
     private javax.swing.JButton editSelectedButton;
+    private javax.swing.JTable imageDirDescriptionTable;
     private javax.swing.JButton removeSelectedButton;
     // End of variables declaration//GEN-END:variables
 

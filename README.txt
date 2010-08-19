@@ -36,12 +36,15 @@ To obtain and build the source code enter the following commands:
     ant
 
 After the build completes you will have a full JNLP distribution built under:
-    ./modules/pub-array-installer/web-dist
+    ./modules/pub-array-builder/web-dist
 
 Assuming you have a bash shell you should also be able to run from the
 command-line (without bothering with a JNLP install) by doing:
-    cd modules/pub-array-installer
-    ./run-installer.bash
+    cd modules/pub-array-builder
+    ./run-builder.bash
+
+The drawback to using the ./run-builder.bash script is that help screens
+will not be available to you since they depend on JNLP APIs to work.
 
 CONTRIBUTING
 ============

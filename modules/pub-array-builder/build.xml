@@ -2,12 +2,12 @@
 
 <project
     xmlns:ivy="antlib:org.apache.ivy.ant"
-    name="PubArray Installer"
+    name="PubArray Builder"
     default="web-dist"
     basedir=".">
     
     <description>
-        build file for the core module in the PubArray application
+        build file for the WAR builder module in the PubArray application
     </description>
     
     <import file="build-properties.xml"/>

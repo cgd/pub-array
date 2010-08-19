@@ -36,7 +36,7 @@
     <resources>
         <j2se version="1.5+" max-heap-size="1024M"/>
 
-        <jar href="dist/pub-array-installer-1.0.jar"/>
+        <jar href="dist/pub-array-builder-1.0.jar"/>
 
         <jar href="dist/lib/activation-1.1-1.0.3.jar"/>
         <jar href="dist/lib/annotations-api-1.0.jar"/>
@@ -47,12 +47,12 @@
         <jar href="dist/lib/gxt-2.1.1.jar"/>
         <jar href="dist/lib/gxt-resources-2.1.1.jar"/>
         <jar href="dist/lib/hsqldb-1.8.0.10.jar"/>
-        <jar href="dist/lib/jax-util-1.0.jar"/>
+        <jar href="dist/lib/java-util-1.0.jar"/>
         <jar href="dist/lib/pub-array-core-1.0.jar"/>
         <jar href="dist/lib/pub-array-gwt-client-1.0.jar"/>
         <jar href="dist/lib/swing-layout-1.0.3.jar"/>
     </resources>
     
-    <application-desc main-class="org.jax.pubarray.installer.PubArrayInstallerMain"/>
+    <application-desc main-class="org.jax.pubarray.builder.PubArrayBuilderMain"/>
     
 </jnlp>

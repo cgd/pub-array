@@ -20,7 +20,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package org.jax.pubarray.installer;
+package org.jax.pubarray.builder;
 
 import javax.swing.SwingUtilities;
 
@@ -28,22 +28,22 @@ import org.jax.util.gui.WizardFlipPanel;
 import org.jax.util.gui.WizardFrame;
 
 /**
- * This class is the main entry point for the pub array installer application
+ * This class is the main entry point for the pub array builder application
  * @author <A HREF="mailto:keith.sheppard@jax.org">Keith Sheppard</A>
  */
-public class PubArrayInstallerMain
+public class PubArrayBuilderMain
 {
     /**
      * The constructor
      */
-    public PubArrayInstallerMain()
+    public PubArrayBuilderMain()
     {
     }
 
     /**
-     * install PubArray
+     * build a PubArray instance
      */
-    private void installPubArray()
+    private void buildPubArray()
     {
         final PubArrayWizardController wizardController =
             new PubArrayWizardController();
@@ -60,13 +60,13 @@ public class PubArrayInstallerMain
     }
     
     /**
-     * The main entry point for the PubArray installer
+     * The main entry point for the PubArray builder
      * @param args
      *          command line arguments (don't care about these)
      */
     public static void main(String[] args)
     {
-        final PubArrayInstallerMain installerMain = new PubArrayInstallerMain();
+        final PubArrayBuilderMain builderMain = new PubArrayBuilderMain();
         
         SwingUtilities.invokeLater(new Runnable()
         {
@@ -75,7 +75,7 @@ public class PubArrayInstallerMain
              */
             public void run()
             {
-                installerMain.installPubArray();
+                builderMain.buildPubArray();
             }
         });
     }

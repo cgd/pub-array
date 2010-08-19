@@ -20,7 +20,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package org.jax.pubarray.installer;
+package org.jax.pubarray.builder;
 
 import java.io.BufferedReader;
 import java.io.File;

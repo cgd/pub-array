@@ -37,12 +37,12 @@ import java.util.List;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import org.jax.pubarray.builder.PubArrayWizardController;
 import org.jax.pubarray.db.CandidateDatabaseManager;
 import org.jax.pubarray.db.ConnectionManager;
 import org.jax.pubarray.db.ExperimentMetadata;
 import org.jax.pubarray.db.HSQLDBConnectionManager;
 import org.jax.pubarray.db.PersistenceManager;
-import org.jax.pubarray.installer.PubArrayWizardController;
 import org.jax.util.io.CommonFlatFileFormat;
 import org.jax.util.io.FileUtilities;
 import org.jax.util.io.FlatFileReader;

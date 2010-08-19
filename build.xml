@@ -12,11 +12,11 @@
     
     <!-- force a build clean until we have a smarter build system -->
     <target name="dist" depends="clean">
-        <subant buildpath="${basedir}/modules/pub-array-installer" target="web-dist"/>
+        <subant buildpath="${basedir}/modules/pub-array-builder" target="web-dist"/>
     </target>
 
     <target name="clean">
-        <subant buildpath="${basedir}/modules/pub-array-installer" target="clean"/>
+        <subant buildpath="${basedir}/modules/pub-array-builder" target="clean"/>
     </target>
     
 </project>

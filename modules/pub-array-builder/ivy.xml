@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ivy-module version="2.0">
-    <info organisation="org.jax" module="pub-array-installer" revision="1.0"/>
+    <info organisation="org.jax" module="pub-array-builder" revision="1.0"/>
     
     <configurations>
         <conf
@@ -14,7 +14,7 @@
     </configurations>
 
     <publications>
-        <artifact name="pub-array-installer" type="jar" ext="jar"/>
+        <artifact name="pub-array-builder" type="jar" ext="jar"/>
     </publications>
     
     <dependencies>
